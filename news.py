@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ class Article(db.Model):
 def main_page():
 	articles = Article.query.all()
 	print(articles)
-	return "<h1>Something is working</h1>"
+	return render_template("articles.html", articles=articles)
 
 
 
