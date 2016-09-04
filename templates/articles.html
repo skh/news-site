@@ -2,11 +2,14 @@
 {% block title %}News - Articles{% endblock %}
 
 {% block content %}
+<h1>Our fabulous news</h1>
+<p>5 most recent articles:</p>
 {% if articles %}
 <ul>
 {% for article in articles %}
-  <li>{{ article.title }}</li>
+  <li><strong><a href="{{url_for('article_page', slug=article.slug)}}">{{ article.title }}</a></strong> <em> by {{article.author_detail.name}} at {{article.time.strftime('%Y-%m-%d %H:%M')}}</em></li>
 {% endfor %}
 </ul>
+<p><a href="">New article</a></p>
 {% endif %}
 {% endblock %}

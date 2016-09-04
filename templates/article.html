@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}News - Article Detail{% endblock %}
+
+{% block content %}
+<h1>{{article.title}}</h1>
+<h2>by {{article.author_detail.name}}</h2>
+<p>{{article.body}}</p>
+<p><em>{{article.author_detail.bio}}</em></p>
+<p><a href="{{url_for('main_page')}}">Back to list</a></p>
+{% endblock %}
