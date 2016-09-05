@@ -1,10 +1,11 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 
 app = Flask(__name__)
+app.secret_key = "something secret and unique"
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2:///news"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -54,7 +55,8 @@ def new_article():
 		# lead = request.form['lead']
 		# body = request.form['body']
 		# print(title)
-		return "<h1>blah</h1>"
+		flash("new articles not yet implemented")
+		return redirect(url_for('main_page'))
 	else:
 		return render_template("new_article.html")
 

@@ -3,11 +3,15 @@
 
 {% block content %}
 <form action="{{url_for('new_article')}}" method="post">
-	<label for="title">Title: <input type="text" name="title" /></label><br />
-	<label for="slug">Slug: <input type="text" name="slug" /></label><br />
-	<label for="lead">Lead: <input type="text" name="lead" /></label><br />
-	<label for="body">Article body: <textarea name="text" name="body"></textarea></label>
-  <button type="submit">Submit Article</button>
+	<label for="title">Title:<br />
+		<input type="text" name="title" value="{{title}}"/></label><br />
+	<label for="slug">Slug:<br />
+		<input type="text" name="slug" value="{{slug}}"/></label><br />
+	<label for="lead">Lead:<br />
+		<input type="text" name="lead" value="{{lead}}"/></label><br />
+	<label for="body">Article body:<br />
+		<textarea name="text" name="body">{{body}}</textarea></label><br />
+	<button type="submit">Submit Article</button>
 </form>
 <p><a href="{{url_for('main_page')}}">Back to list</a></p>
 {% endblock %}
