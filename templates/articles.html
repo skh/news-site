@@ -7,7 +7,8 @@
 {% if articles %}
 <ul>
 {% for article in articles %}
-  <li><strong><a href="{{url_for('article_page', slug=article.slug)}}">{{ article.title }}</a></strong> <em> by {{article.author_detail.name}} at {{article.time.strftime('%Y-%m-%d %H:%M')}}</em></li>
+  <li><strong><a href="{{url_for('article_page', slug=article.slug)}}">{{ article.title }}</a></strong> <em> by {{article.author_detail.name}} at {{article.time.strftime('%Y-%m-%d %H:%M')}}</em>
+  <p>{{article.lead}}</p></li>
 {% endfor %}
 </ul>
 <p><a href="">New article</a></p>
