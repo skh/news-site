@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
+
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
+from sqlalchemy import desc
 
 app = Flask(__name__)
 app.secret_key = "something secret and unique"
@@ -44,19 +47,36 @@ class Log(db.Model):
 
 @app.route('/')
 def main_page():
-	articles = Article.query.order_by('time desc').limit(5).all()
+	articles = Article.query.order_by(desc(Article.time)).limit(5).all()
 	return render_template("articles.html", articles=articles)
 
 @app.route('/article/new', methods=['POST', 'GET'])
 def new_article():
 	if request.method == 'POST':
-		# title = request.form['title']
-		# slug = request.form['slug']
-		# lead = request.form['lead']
-		# body = request.form['body']
-		# print(title)
-		flash("new articles not yet implemented")
-		return redirect(url_for('main_page'))
+		title = request.form.get('title')
+		slug = request.form.get('slug')
+		lead = request.form.get('lead')
+		body = request.form.get('body')
+
+		if (not title or not slug or not lead or not body):
+			flash("Please fill in all fields.")
+			return render_template("new_article.html",
+									title=title, slug=slug,
+									lead=lead, body=body)
+		else:
+			slug_in_use = Article.query.filter(Article.slug==slug).count()
+			if slug_in_use:
+				flash("The slug %s is already in use. Please choose another one." % (slug))
+				return render_template("new_article.html", title=title,
+										lead=lead, body=body)
+			else:
+				article = Article(title=title, slug=slug,
+									 lead=lead, body=body,
+									 time=datetime.now(), author=3)	# Anonymous Contributor
+				db.session.add(article)
+				db.session.commit()
+				flash("Article successfully created.")
+				return redirect(url_for('main_page'))
 	else:
 		return render_template("new_article.html")
 
