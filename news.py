@@ -12,11 +12,6 @@ app.secret_key = "something secret and unique"
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2:///news"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# all queries we will ever need in one place
-queries={}
-queries['ARTICLES'] = "SELECT * FROM"
-
-
 db = SQLAlchemy(app)
 
 class Article(db.Model):
