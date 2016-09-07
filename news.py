@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import re
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -59,6 +59,10 @@ def new_article():
             return render_template("new_article.html",
                                    title=title, slug=slug, lead=lead, body=body)
         else:
+            if not _slug_is_valid(slug):
+                flash("Please use only A-Z, a-z, 0-9 and - in slugs")
+                return render_template("new_article.html",
+                                       title=title, lead=lead, body=body)
             try:
                 article = Article(title=title, slug=slug, lead=lead, body=body,
                                   time=datetime.now(),
@@ -95,6 +99,9 @@ def _log_access(path, ip, status, method):
                     method=method, time=datetime.now())
     db.session.add(log_entry)
     db.session.commit()
+
+def _slug_is_valid(slug):
+    return not re.search("[^-a-zA-Z0-9]", slug)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
