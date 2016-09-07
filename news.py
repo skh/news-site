@@ -31,7 +31,7 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     bio = db.Column(db.String)
-    addresses = db.relationship('Article', backref='author_detail')
+    articles = db.relationship('Article', backref='author_detail')
 
 class Log(db.Model):
     __tablename__ = 'log'
