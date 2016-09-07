@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import re
+import bleach
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -49,10 +50,10 @@ def main_page():
 @app.route('/article/new', methods=['POST', 'GET'])
 def new_article():
     if request.method == 'POST':
-        title = request.form.get('title')
+        title = bleach.clean(request.form.get('title'))
         slug = request.form.get('slug')
-        lead = request.form.get('lead')
-        body = request.form.get('body')
+        lead = bleach.clean(request.form.get('lead'))
+        body = bleach.clean(request.form.get('body'))
 
         if not (title and slug and lead and body):
             flash("Please fill in all fields.")
