@@ -16,3 +16,5 @@ News Site project with postgresql and flask
 * make sure requirements from `requirements.txt` are installed. This project uses `python3`
 * Make app executable with `chmod 755 news.py`
 * Run app in development web server with `./news.py`
+
+If you are not running this project in vagrant, change the IP addresses the app is listening on in line 101 of `news.py` to `127.0.0.1`.
