@@ -45,6 +45,8 @@ class Log(db.Model):
 @app.route('/')
 def main_page():
     articles = Article.query.order_by(desc(Article.time)).limit(5).all()
+    ip = request.remote_addr
+    _log_access('/', ip, "200 OK", 'GET')
     return render_template("articles.html", articles=articles)
 
 @app.route('/article/new', methods=['POST', 'GET'])
@@ -81,6 +83,8 @@ def new_article():
                 flash("A database error occured. Apologies.")
                 return redirect(url_for('main_page'))
     else:
+        ip = request.remote_addr
+        _log_access('/article/new', ip, "200 OK", 'GET')
         return render_template("new_article.html")
 
 @app.route('/article/<string:slug>')
